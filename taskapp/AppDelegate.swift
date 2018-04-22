@@ -22,7 +22,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         center.requestAuthorization(options: [.alert, .sound]) { (granted, error) in
             // Enable or disable features based on authorization
         }
-    
+        
+        // エラーポイント（次回メンタリング時に修繕）
         center.delegate = self;
         
         return true
