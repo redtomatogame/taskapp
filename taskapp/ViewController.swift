@@ -9,7 +9,7 @@
 import UIKit
 import RealmSwift
 
-class ViewController: UIViewController {
+class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource {
     
     @IBOutlet weak var tableView: UITableView!
     
@@ -77,29 +77,34 @@ class ViewController: UIViewController {
                 self.realm.delete(self.taskArray[indexPath.row])
                 tableView.deleteRows(at: [indexPath as IndexPath], with: UITableViewRowAnimation.fade)
             }
-            // segue で画面遷移するに呼ばれる
-            override func prepare(for segue: UIStoryboardSegue, sender: Any?){
-                let inputViewController:InputViewController = segue.destination as! InputViewController
-                
-                if segue.identifier == "cellSegue" {
-                    let indexPath = self.tableView.indexPathForSelectedRow
-                    inputViewController.task = taskArray[indexPath!.row]
-                } else {
-                    let task = Task()
-                    task.date = NSDate()
-                    
-                    if taskArray.count != 0 {
-                        task.id = taskArray.max(ofProperty: "id")! + 1
-                    }
-                    
-                    inputViewController.task = task
-                }
-                // 入力画面から戻ってきた時に TableView を更新させる
-                override func viewWillAppear(_ animated: Bool) {
-                    super.viewWillAppear(animated)
-                    tableView.reloadData()
-                }
-                
-            }
+            
+            
+            
         }
     }
+    
+    // 入力画面から戻ってきた時に TableView を更新させる
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        tableView.reloadData()
+    }
+    
+    // segue で画面遷移するに呼ばれる
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?){
+        let inputViewController:InputViewController = segue.destination as! InputViewController
+        
+        if segue.identifier == "cellSegue" {
+            let indexPath = self.tableView.indexPathForSelectedRow
+            inputViewController.task = taskArray[indexPath!.row]
+        } else {
+            let task = Task()
+            task.date = NSDate()
+            
+            if taskArray.count != 0 {
+                task.id = taskArray.max(ofProperty: "id")! + 1
+            }
+            
+            inputViewController.task = task
+        }
+    }
+}
