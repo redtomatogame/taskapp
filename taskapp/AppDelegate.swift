@@ -11,7 +11,7 @@ import UserNotifications
 
 @UIApplicationMain
 
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDelegate {
 
     var window: UIWindow?
 
@@ -25,7 +25,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // エラーポイント（次回メンタリング時に修繕）
         center.delegate = self;
-        
         return true
         
         }
